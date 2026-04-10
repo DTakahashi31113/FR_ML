@@ -1,0 +1,115 @@
+import pandas as pd
+import numpy as np
+from sklearn import tree, metrics
+from sklearn.model_selection import GridSearchCV, train_test_split, cross_val_predict
+
+fold_number = 5
+number_of_test_samples = 0
+dataset = pd.read_csv('dataset.csv', index_col=0)
+
+y = dataset.iloc[:, 0]
+x = dataset.iloc[:, 1:]
+
+# ランダムにトレーニングデータとテストデータとに分割
+if number_of_test_samples == 0:
+    x_train = x.copy()
+    x_test = x.copy()
+    y_train = y.copy()
+    y_test = y.copy()
+else:
+    x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=number_of_test_samples, shuffle=True, random_state=3, stratify=y)
+
+x # 確認
+
+param = {'max_depth':[1, 2, 3, 4, 5], 'min_samples_leaf':[1, 2, 3], 'min_samples_split':[2, 3, 4]}
+
+clf = GridSearchCV(tree.DecisionTreeClassifier(), param, cv=10)
+clf.fit(x_train, y_train)
+
+scores = clf.cv_results_['mean_test_score']
+params = clf.cv_results_['params']
+
+best_clf = clf.best_estimator_
+print('best_condition:\n', best_clf)
+print('train_score:\n', best_clf.score(x_train, y_train))
+print('test_score:\n', best_clf.score(x_test, y_test))
+r2cvs = []
+for i in range(len(scores)):
+    print(scores[i], params[i])
+    r2cvs.append(scores[i])
+
+optimal_param = params[np.where(r2cvs==np.max(r2cvs))[0][0]]
+optimal_param
+
+optimal_max_depth = optimal_param['max_depth']
+optimal_max_depth
+
+optimal_min_samples_leaf = optimal_param['min_samples_leaf']
+optimal_min_samples_leaf
+
+optimal_min_samples_split = optimal_param['min_samples_split']
+optimal_min_samples_split
+
+model = tree.DecisionTreeClassifier(max_depth=optimal_max_depth, min_samples_leaf=optimal_min_samples_leaf)
+model.fit(x_train, y_train)
+
+# from hkaneko1985/python_data_analysis_ohmsha/sample_functions.py
+def estimation_and_performance_check_in_classification_train_and_test(model, x_train, y_train, x_test, y_test):
+    class_types = list(set(y_train))  # クラスの種類。これで混同行列における縦と横のクラスの順番を定めます
+    class_types.sort(reverse=True)  
+
+    # トレーニングデータのクラスの推定
+    estimated_y_train = pd.DataFrame(model.predict(x_train), index=x_train.index, columns=[
+        'estimated class'])  # トレーニングデータのクラスを推定し、Pandas の DataFrame 型に変換。行の名前・列の名前も設定
+
+    # トレーニングデータの混同行列
+    confusion_matrix_train = pd.DataFrame(
+        metrics.confusion_matrix(y_train, estimated_y_train, labels=class_types), index=class_types,
+        columns=class_types)  # 混同行列を作成し、Pandas の DataFrame 型に変換。行の名前・列の名前を定めたクラスの名前として設定
+    confusion_matrix_train.to_csv('confusion_matrix_train.csv')  
+    print(confusion_matrix_train)  
+    print('Accuracy for training data :', metrics.accuracy_score(y_train, estimated_y_train), '\n')  # 正解率の表示
+
+    # トレーニングデータの結果の保存
+    y_train_for_save = pd.DataFrame(y_train)  # Series のため列名は別途変更
+    y_train_for_save.columns = ['actual class']
+    y_error_train = y_train_for_save.iloc[:, 0] == estimated_y_train.iloc[:, 0]
+    y_error_train = pd.DataFrame(y_error_train)  # Series のため列名は別途変更
+    y_error_train.columns = ['TRUE if estimated class is correct']
+    results_train = pd.concat([estimated_y_train, y_train_for_save, y_error_train], axis=1)
+    results_train.to_csv('estimated_y_train.csv')  
+
+    # テストデータのクラスの推定
+    estimated_y_test = pd.DataFrame(model.predict(x_test), index=x_test.index,
+                                    columns=['estimated class'])  # テストデータのクラスを推定し、Pandas の DataFrame 型に変換。行の名前・列の名前も設定
+
+    # テストデータの混同行列
+    confusion_matrix_test = pd.DataFrame(
+        metrics.confusion_matrix(y_test, estimated_y_test, labels=class_types), index=class_types,
+        columns=class_types)  # 混同行列を作成し、Pandas の DataFrame 型に変換。行の名前・列の名前を定めたクラスの名前として設定
+    confusion_matrix_test.to_csv('confusion_matrix_test.csv')  
+    print(confusion_matrix_test)  
+    print('Accuracy for test data :', metrics.accuracy_score(y_test, estimated_y_test))  
+
+    # テストデータの結果の保存
+    y_test_for_save = pd.DataFrame(y_test)  # Series のため列名は別途変更
+    y_test_for_save.columns = ['actual class']
+    y_error_test = y_test_for_save.iloc[:, 0] == estimated_y_test.iloc[:, 0]
+    y_error_test = pd.DataFrame(y_error_test)  # Series のため列名は別途変更
+    y_error_test.columns = ['TRUE if estimated class is correct']
+    results_test = pd.concat([estimated_y_test, y_test_for_save, y_error_test], axis=1)
+    results_test.to_csv('estimated_y_test.csv')  
+
+# トレーニングデータ・テストデータの推定、混同行列の作成、正解率の値の表示、推定値の保存
+estimation_and_performance_check_in_classification_train_and_test(model, x_train, y_train, x_test, y_test)
+
+# 決定木のモデルを確認するための dot ファイルの作成
+with open('tree.dot', 'w') as f:
+    if model.classes_.dtype == 'object':
+        class_names = model.classes_
+    else:
+        # クラス名が数値のときの対応
+        class_names = []
+        for class_name_number in range(0, model.classes_.shape[0]):
+            class_names.append(str(model.classes_[class_name_number]))
+    tree.export_graphviz(model, out_file=f, feature_names=x.columns, class_names=class_names)
