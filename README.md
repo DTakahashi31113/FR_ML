@@ -24,8 +24,8 @@ FR_ML/
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;notebooks/&nbsp;&nbsp;&nbsp;&nbsp;# Jupyter notebooks for reproducing analyses and figures  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;README.md  
 
-## Requirements (Note: Python version?) 
-- Python **X.XX** or later  
+## Requirements  
+- Python 3.10+  
 - NumPy  
 - Pandas  
 - Scikit-learn  
