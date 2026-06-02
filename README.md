@@ -31,7 +31,50 @@ FR_ML/
 - Scikit-learn  
 - DCEkit  
 
-## Note
+## Instructions  
+1. Install requirements  
+2. Run the scripts below to reproduce the figures.
+
+## Dataset-script correspondence 
+### Agglomeration analysis  
+Dataset:  
+&nbsp;- data/Agglomerate/*.csv  
+Scripts:  
+&nbsp;- DTC.py  
+&nbsp;- DTC_DCV.py  
+Outputs:  
+&nbsp;- Figure 2  
+&nbsp;- Supplementary Figure 4  
+
+### Composition analysis  
+Dataset:  
+&nbsp;- data/Composition/*.csv  
+Scripts:  
+&nbsp;- DTC.py  
+&nbsp;- DTC_DCV.py  
+Outputs:  
+&nbsp;- Figure 3a–c  
+&nbsp;- Supplementary Figures 5–7  
+
+### Lattice constant analysis  
+Dataset:  
+&nbsp;- data/LatticeConstant/*.csv  
+Scripts:  
+&nbsp;- DTC.py  
+&nbsp;- DTC_DCV.py  
+Outputs:  
+&nbsp;- Figure 3d–f  
+&nbsp;- Supplementary Figures 8–10  
+
+### Particle size analysis  
+Dataset:  
+&nbsp;- data/MeanSize/HEA25_A.csv  
+Script:  
+&nbsp;- PLS_DCV_CVPFI.py  
+Output:  
+&nbsp;- Figure 5  
+
+## Note  
 Analyses were performed on Windows.  
 The code has not been tested on Linux or macOS environments. 
 
