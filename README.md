@@ -44,7 +44,7 @@ Scripts:
 &nbsp;- DTC_DCV.py  
 Outputs:  
 &nbsp;- Figure 2  
-&nbsp;- Supplementary Figure 4  
+&nbsp;- Supplementary Figure 3  
 
 ### Composition analysis  
 Dataset:  
@@ -54,7 +54,7 @@ Scripts:
 &nbsp;- DTC_DCV.py  
 Outputs:  
 &nbsp;- Figure 3a–c  
-&nbsp;- Supplementary Figures 5–7  
+&nbsp;- Supplementary Figures 4–8  
 
 ### Lattice constant analysis  
 Dataset:  
@@ -64,7 +64,7 @@ Scripts:
 &nbsp;- DTC_DCV.py  
 Outputs:  
 &nbsp;- Figure 3d–f  
-&nbsp;- Supplementary Figures 8–10  
+&nbsp;- Supplementary Figures 9–14  
 
 ### Particle size analysis  
 Dataset:  
@@ -78,6 +78,6 @@ Output:
 Analyses were performed on Windows.  
 The code has not been tested on Linux or macOS environments. 
 
-## Author
+## Authors
 - Daiki Takahashi
 - Hiromasa Kaneko
