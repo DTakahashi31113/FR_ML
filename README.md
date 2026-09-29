@@ -44,7 +44,7 @@ Scripts:
 &nbsp;- DTC_DCV.py  
 Outputs:  
 &nbsp;- Figure 2  
-&nbsp;- Supplementary Figure 3  
+&nbsp;- Supplementary Figure 4  
 
 ### Composition analysis  
 Dataset:  
@@ -53,8 +53,8 @@ Scripts:
 &nbsp;- DTC.py  
 &nbsp;- DTC_DCV.py  
 Outputs:  
-&nbsp;- Figure 3a–c  
-&nbsp;- Supplementary Figures 4–8  
+&nbsp;- Figure 3b, 3c  
+&nbsp;- Supplementary Figures 5–9  
 
 ### Lattice constant analysis  
 Dataset:  
@@ -63,8 +63,8 @@ Scripts:
 &nbsp;- DTC.py  
 &nbsp;- DTC_DCV.py  
 Outputs:  
-&nbsp;- Figure 3d–f  
-&nbsp;- Supplementary Figures 9–14  
+&nbsp;- Figure 3e, 3f  
+&nbsp;- Supplementary Figures 10–15  
 
 ### Particle size analysis  
 Dataset:  
