@@ -1,8 +1,8 @@
 # Overview
 This repository contains the code and data used in our study:  
-**"Machine Learning-Based Precise Flow Synthesis of Platinum-Group-Metal High-Entropy Alloy Nanoparticles".**  
+**"Machine Learning-Based Flow Synthesis of Platinum-Group-Metal High-Entropy Alloy Nanoparticles".**  
   
-It provides a precise synthesis method for homogeneously alloyed and size-controlled RuRhPdIrPt HEA NPs by integrating flow synthesis with interpretable machine learning.  
+It provides a synthesis method for homogeneously alloyed and size-controlled RuRhPdIrPt HEA NPs by integrating flow synthesis with interpretable machine learning.  
   
 This repository includes:
   
@@ -33,7 +33,7 @@ FR_ML/
 
 ## Instructions  
 1. Install requirements  
-2. Run the scripts below to reproduce the figures.
+2. Run the scripts below to reproduce the figures
 
 ## Dataset-script correspondence 
 ### Agglomeration analysis  
